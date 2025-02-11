@@ -10,7 +10,7 @@ function App() {
       <Column text="Todo:"/>
       <AddNewItem
         toggleText="+ Add another card"
-        onAdd={console.log}
+        onAdd={(text)=>console.log(text)}
       />
     </AppContainer>
     </>

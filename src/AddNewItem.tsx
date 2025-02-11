@@ -1,3 +1,4 @@
+import { NewItemForm } from "./NewItemForm";
 import { AddItemButton } from "./styles";
 import { useState } from 'react';
 
@@ -8,12 +9,14 @@ type AddItemButtonProps={
 }
 
 export const AddNewItem=(({toggleText,onAdd,dark}:AddItemButtonProps)=>{
-    const [showForm,setShowForm]=useState("false");
+    const [showForm,setShowForm]=useState(false);
     if(showForm){
+        return <NewItemForm onAdd={onAdd}></NewItemForm>
+        // console.log("Hitting the showForm if condition")
 
     }
     return(
-        <AddItemButton dark={dark} onClick={()=>setShowForm("true")}>{toggleText}</AddItemButton>
+        <AddItemButton dark={dark} onClick={()=>setShowForm(true)}>{toggleText}</AddItemButton>
 
 
     )
