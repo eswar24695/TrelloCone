@@ -2,6 +2,7 @@ import { AddItemButton, CardContainer, ColumnContainer, ColumnTitle } from "./st
 import { Card } from "./Card";
 import { AddNewItem } from "./AddNewItem";
 import { useAppState } from "./state/AppStateContext";
+import { addTask } from "./state/actions";
 
 type ColumnProps = {
   text: String;
@@ -9,7 +10,7 @@ type ColumnProps = {
 };
 
 export const Column = ({ text,id }: ColumnProps) => {
-  const {getTaskById} =useAppState();
+  const {getTaskById,dispatch} =useAppState();
   
   const tasks=getTaskById(id);
 
@@ -27,7 +28,7 @@ export const Column = ({ text,id }: ColumnProps) => {
         <Card text="Begin to use static typing"/> */}
         <AddNewItem
         toggleText="+ Add another card"
-        onAdd={console.log}
+        onAdd={(text)=> dispatch(addTask(text,id))}
         dark
       />
       </ColumnContainer>

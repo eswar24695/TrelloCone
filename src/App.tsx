@@ -3,14 +3,16 @@ import { AppContainer, CardContainer, ColumnContainer, ColumnTitle } from './sty
 import { Column } from './Column'
 import { AddNewItem } from './AddNewItem'
 import { useAppState } from './state/AppStateContext'
+import { addList } from './state/actions';
 
 function App() {
-  const {lists}=useAppState();
+  const {lists,dispatch}=useAppState();
   return (
     <>
     <AppContainer>
       {
         lists.map((list)=>{
+          console.log("Rendering list:", list); 
           return (
             <Column text={list.text} id={list.id} key={list.id}/>
           )
@@ -18,8 +20,8 @@ function App() {
         })
       }
       <AddNewItem
-        toggleText="+ Add another card"
-        onAdd={(text)=>console.log(text)}
+        toggleText="+ Add another list"
+        onAdd={(text)=>dispatch(addList(text))}
       />
     </AppContainer>
     </>
