@@ -2,21 +2,42 @@ import { AddItemButton, CardContainer, ColumnContainer, ColumnTitle } from "./st
 import { Card } from "./Card";
 import { AddNewItem } from "./AddNewItem";
 import { useAppState } from "./state/AppStateContext";
-import { addTask } from "./state/actions";
+import { addTask, moveList } from "./state/actions";
+import { useRef } from 'react';
+import { useItemDrag } from "./utils/useItemDrag";
+import { useDrop } from "react-dnd";
+import { throttle } from "throttle-debounce-ts";
 
 type ColumnProps = {
-  text: String;
+  text: string;
   id:string;
 };
 
 export const Column = ({ text,id }: ColumnProps) => {
-  const {getTaskById,dispatch} =useAppState();
+  const {getTaskById,dispatch,draggedItem} =useAppState();
+  const ref=useRef<HTMLDivElement>(null)
+  const {drag}=useItemDrag({type:"COLUMN",id,text})
+  const [,drop]=useDrop({
+    accept:"COLUMN",
+    hover:throttle(200,()=>{
+      if(!draggedItem){
+        return
+      }
+      if(draggedItem.type==="COLUMN"){
+        if(draggedItem.id===id){
+          return
+        }
+        dispatch(moveList(draggedItem.id,id))
+      }
+    })
+  })
+  drag(drop(ref))
   
   const tasks=getTaskById(id);
 
   return (
     <>
-      <ColumnContainer>
+      <ColumnContainer ref={ref}>
         <ColumnTitle>{text}</ColumnTitle>
         {
           tasks.map((task)=>(
