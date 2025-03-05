@@ -4,7 +4,7 @@ import { setDraggedItem } from '../state/actions';
 import { DragItem } from '../DragItem';
 export const useItemDrag=(item:DragItem)=>{
     const {dispatch}=useAppState()
-    const [drag]=useDrag({
+    const [,drag]=useDrag({
         type:item.type,
         item:()=>{
             dispatch(setDraggedItem(item))

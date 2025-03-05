@@ -3,7 +3,7 @@ import { AppContainer, CardContainer, ColumnContainer, ColumnTitle } from './sty
 import { Column } from './Column'
 import { AddNewItem } from './AddNewItem'
 import { useAppState } from './state/AppStateContext'
-import { addList } from './state/actions';
+import { addList, Action } from './state/actions';
 
 function App() {
   const {lists,dispatch}=useAppState();
@@ -12,7 +12,7 @@ function App() {
     <AppContainer>
       {
         lists.map((list)=>{
-          console.log("Rendering list:", list); 
+          // console.log("Rendering list:", list); 
           return (
             <Column text={list.text} id={list.id} key={list.id}/>
           )
